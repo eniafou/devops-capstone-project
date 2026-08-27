@@ -133,12 +133,12 @@ class TestAccountService(TestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        data  = response.get_json()
-        self.assertEqual(data ["name"], account.name)
-        self.assertEqual(data ["email"], account.email)
-        self.assertEqual(data ["address"], account.address)
-        self.assertEqual(data ["phone_number"], account.phone_number)
-        self.assertEqual(data ["date_joined"], str(account.date_joined))
+        data = response.get_json()
+        self.assertEqual(data["name"], account.name)
+        self.assertEqual(data["email"], account.email)
+        self.assertEqual(data["address"], account.address)
+        self.assertEqual(data["phone_number"], account.phone_number)
+        self.assertEqual(data["date_joined"], str(account.date_joined))
 
     def test_account_not_found(self):
         """It should not Read an Account that is not found"""
@@ -168,19 +168,19 @@ class TestAccountService(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         updated_account = resp.get_json()
         self.assertEqual(updated_account["name"], "Something Known")
-    
+
     def test_update_account_not_found(self):
         """It should not Update an Account that is not found"""
         response = self.client.put("/accounts/0", json={})
 
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
-    
+
     def test_delete_account(self):
         """It should Delete an Account"""
         account = self._create_accounts(1)[0]
         resp = self.client.delete(f"{BASE_URL}/{account.id}")
         self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
-    
+
     def test_method_not_allowed(self):
         """It should not allow an illegal method call"""
         resp = self.client.delete(BASE_URL)
